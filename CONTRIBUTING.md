@@ -50,7 +50,6 @@ cd ~/.config/atros
 rm -rf .atros
 
 # Clone your forked repo
-
 git clone git@github.com:your-username/config-prerequisites.git .atros
 
 # Navigate to the repo
