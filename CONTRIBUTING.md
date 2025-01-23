@@ -19,7 +19,7 @@ You can fork this repo by clicking the fork button in the top right corner of th
 git clone git@github.com:your-username/atros.git
 
 # Navigate to the project directory
- cd atros/
+cd atros/
 
 # Create a new branch
 git checkout -b cool-branch
@@ -50,7 +50,6 @@ cd ~/.config/atros
 rm -rf .atros
 
 # Clone your forked repo
-
 git clone git@github.com:your-username/config-prerequisites.git .atros
 
 # Navigate to the repo
