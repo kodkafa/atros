@@ -6,7 +6,7 @@ mod general;
 mod install;
 mod shell;
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum System {
     Mac,
