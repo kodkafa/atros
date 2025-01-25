@@ -18,7 +18,7 @@ pub fn run(
         return Ok(());
     }
 
-    let mut should_skip_recursion: Option<anyhow::Result<()>> = None;
+    let mut recursion_res: anyhow::Result<()> = Ok(());
 
     let packages = task
         .packages
@@ -26,6 +26,10 @@ pub fn run(
         .map(|package| match package {
             PackagesToInstall::Primal(p) => p.to_string() + " ",
             PackagesToInstall::WithSettings(package_with_sett) => {
+                if recursion_res.is_err() {
+                    return "".to_string();
+                }
+
                 if let Some(params_package) = &package_with_sett.params {
                     let mut new_package = package_with_sett.to_owned();
                     new_package.params = None;
@@ -42,7 +46,10 @@ pub fn run(
                         .extend(params_package.to_owned());
 
                     let res = run(&recursed_task, system, package_manager, task_cache);
-                    should_skip_recursion = Some(res);
+
+                    if recursion_res.is_ok() {
+                        recursion_res = res;
+                    }
                 }
 
                 if package_with_sett.system.is_none()
@@ -56,9 +63,7 @@ pub fn run(
         })
         .collect::<String>();
 
-    if let Some(recursion_res) = should_skip_recursion {
-        return recursion_res;
-    }
+    recursion_res?;
 
     let cmd_string = format!(
         "{} {} {}",
@@ -83,17 +88,16 @@ pub fn run(
         packages
     );
 
-    let skip = task_cache.should_skip(&cmd_string)?;
+    println!("======================== Running cmd:\n{cmd_string}");
 
-    if skip {
+    if task_cache.should_skip(&cmd_string)? {
         return Ok(());
     }
 
-    task_cache.command = cmd_string.clone();
-
     println_std("Installing given package(s)")?;
 
-    let output = Command::new("sh").arg("-c").arg(cmd_string).output()?;
+    let output = Command::new("sh").arg("-c").arg(&cmd_string).output()?;
+    task_cache.command = cmd_string;
 
     match is_cmd_passes(&output) {
         Ok(success) => {

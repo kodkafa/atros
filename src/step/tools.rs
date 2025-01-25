@@ -65,7 +65,7 @@ pub fn is_cmd_passes(output: &Output) -> anyhow::Result<bool> {
 
         if input != "y" {
             println!("Exiting...");
-            return Err(anyhow::anyhow!("Command failed"));
+            return Err(anyhow::anyhow!("Exit after failed command"));
         }
 
         println_std("Continuing...")?;
