@@ -6,7 +6,7 @@ The best way to find what to contribute in the project is to use it personally f
 
 The main repository is the one you're inside currently, and it's a single binary Rust application that follows Rust's module structure. Therefore, it's simple to work on.
 
-There are two more repositories to know about: [config template](https://github.com/Atros-Automation-Tools/config-template), which is the main configuration template that you clone to your .config/ directory when you run `atros init`, and in this template repository, we have [config-prerequisites](https://github.com/Atros-Automation-Tools/config-prerequisites) as a git submodule. The reason for having a separate repo is to be able to update Atros easily without wiping users' defined steps. Since the type definitions in that repository might get updated at some point, when we implement an `upgrade` CLI command in this tool, we want to upgrade not only the binary itself but also the prerequisites folder (which is .atros in the ~/.config/atros/ folder)
+There are two more repositories to know about: [config-template](https://github.com/kodkafa/config-template), which is the main configuration template that you clone to your .config/ directory when you run `atros init`, and in this template repository, we have [config-prerequisites](https://github.com/kodkafa/config-prerequisites) as a git submodule. The reason for having a separate repo is to be able to update Atros easily without wiping users' defined steps. Since the type definitions in that repository might get updated at some point, when we implement an `upgrade` CLI command in this tool, we want to upgrade not only the binary itself but also the prerequisites folder (which is .atros in the ~/.config/atros/ folder)
 
 ## How to Contribute to the Main Repository
 
@@ -38,7 +38,7 @@ If you want to change type definitions or add new ones, this will be helpful.
 
 ### Fork the Repo
 
-Go to [config-prerequisites](https://github.com/Atros-Automation-Tools/config-prerequisites) repository, and fork it.
+Go to [config-prerequisites](https://github.com/kodkafa/config-prerequisites) repository, and fork it.
 
 ### Replace the default prerequisites with yours
 
