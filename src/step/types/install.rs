@@ -10,14 +10,27 @@ pub struct PackageWithSettings {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(untagged)]
-pub enum PackageToInstall {
+pub enum PackagesToInstall {
     Primal(String),
     WithSettings(PackageWithSettings),
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct ParamsWithSystem {
+    pub system: Option<System>,
+    pub list: Vec<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(untagged)]
+pub enum Param {
+    Primal(String),
+    WithSettings(ParamsWithSystem),
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct InstallTask {
     pub system: Option<System>,
-    pub packages: Vec<PackageToInstall>,
-    pub params: Option<Vec<String>>,
+    pub packages: Vec<PackagesToInstall>,
+    pub params: Option<Vec<Param>>,
 }

@@ -4,7 +4,7 @@ use crate::{cache::CachedTask, system_pacman::PackageManager};
 
 use super::{
     tools::{is_cmd_passes, println_std},
-    InstallTask, PackageToInstall, System,
+    InstallTask, PackagesToInstall, Param, System,
 };
 
 pub fn run(
@@ -22,8 +22,8 @@ pub fn run(
         .packages
         .iter()
         .map(|package| match package {
-            PackageToInstall::Primal(p) => p.to_string() + " ",
-            PackageToInstall::WithSettings(sys_package) => {
+            PackagesToInstall::Primal(p) => p.to_string() + " ",
+            PackagesToInstall::WithSettings(sys_package) => {
                 if sys_package.system.is_none() || sys_package.system.as_ref() == Some(system) {
                     sys_package.list.join(" ") + " "
                 } else {
@@ -33,28 +33,40 @@ pub fn run(
         })
         .collect::<String>();
 
-    let cmd_str = format!(
+    let cmd_string = format!(
         "{} {} {}",
         package_manager.install_cmd,
         if let Some(params) = &task.params {
-            params.join(" ")
+            params
+                .iter()
+                .map(|param| match param {
+                    Param::Primal(p) => p.to_string() + " ",
+                    Param::WithSettings(sys_param) => {
+                        if sys_param.system.is_none() || sys_param.system.as_ref() == Some(system) {
+                            sys_param.list.join(" ") + " "
+                        } else {
+                            "".to_string()
+                        }
+                    }
+                })
+                .collect()
         } else {
             "".to_string()
         },
         packages
     );
 
-    let skip = task_cache.should_skip(&cmd_str)?;
+    let skip = task_cache.should_skip(&cmd_string)?;
 
     if skip {
         return Ok(());
     }
 
-    task_cache.command = cmd_str.clone();
+    task_cache.command = cmd_string.clone();
 
     println_std("Installing given package(s)")?;
 
-    let output = Command::new("sh").arg("-c").arg(cmd_str).output()?;
+    let output = Command::new("sh").arg("-c").arg(cmd_string).output()?;
 
     match is_cmd_passes(&output) {
         Ok(success) => {
