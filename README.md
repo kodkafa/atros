@@ -22,21 +22,14 @@ Automate your tasks with Atros, simply and ergonomically.
 
 ## Getting Started
 
-To get started, you need to build Atros from source using Cargo. Binary sources will be provided in the upcoming releases.
+To get started, you need to build Atros from git repository using `cargo`. Binary files & official cargo binary will be provided in the upcoming releases
 
 ```sh
-git clone https://github.com/Atros-Automation-Tools/atros
-cd atros
-cargo build --release
+cargo install --git https://github.com/kodkafa/atros atros
 ```
 
-Now the binary is created. To run it from anywhere, you can move the binary to a bin folder, like /usr/local/bin:
+> Warning: Installation will work anyways, but if you haven't added ~/.cargo/bin/ directory to your `PATH` variable, you'll not be able to run atros command.
 
-```sh
-sudo mv ./target/release/atros /usr/local/bin
-```
-
-You may need to run source command or open up a new terminal to run atros command.
 After the installation is complete, run `atros init`, and it'll create the initial configurations on ~/.config/atros/
 
 To edit your tasks, go to ~/.config/atros/steps/ Here, you can create and edit your tasks easily. Step structure is easy to understand, you can take a look at the initial step.
