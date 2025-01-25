@@ -56,7 +56,7 @@ pub fn run(
 
         match task {
             Task::Install(task) => {
-                run_install::run(task, package_manager, task_cache)?;
+                run_install::run(task, system, package_manager, task_cache)?;
             }
             Task::Shell(task) => {
                 run_shell::run(task, task_cache)?;

@@ -6,7 +6,7 @@ use crate::cache::CachedTask;
 
 use super::{
     tools::{is_cmd_passes, prettify_output, println_no_space_std, println_std, smallify_command},
-    ShellTask,
+    types::ShellTask,
 };
 
 pub fn run(task: &ShellTask, task_cache: &mut CachedTask) -> anyhow::Result<()> {

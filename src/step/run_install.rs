@@ -4,11 +4,12 @@ use crate::{cache::CachedTask, system_pacman::PackageManager};
 
 use super::{
     tools::{is_cmd_passes, println_std},
-    InstallTask,
+    InstallTask, PackageToInstall, System,
 };
 
 pub fn run(
     task: &InstallTask,
+    system: &System,
     package_manager: &PackageManager,
     task_cache: &mut CachedTask,
 ) -> anyhow::Result<()> {
@@ -16,6 +17,21 @@ pub fn run(
         println_std("Warning: Package list is empty, continuing")?;
         return Ok(());
     }
+
+    let packages = task
+        .packages
+        .iter()
+        .map(|package| match package {
+            PackageToInstall::Primal(p) => p.to_string() + " ",
+            PackageToInstall::WithSettings(sys_package) => {
+                if sys_package.system.is_none() || sys_package.system.as_ref() == Some(system) {
+                    sys_package.list.join(" ") + " "
+                } else {
+                    "".to_string()
+                }
+            }
+        })
+        .collect::<String>();
 
     let cmd_str = format!(
         "{} {} {}",
@@ -25,7 +41,7 @@ pub fn run(
         } else {
             "".to_string()
         },
-        task.packages.join(" ")
+        packages
     );
 
     let skip = task_cache.should_skip(&cmd_str)?;
@@ -36,7 +52,7 @@ pub fn run(
 
     task_cache.command = cmd_str.clone();
 
-    println_std(format!("Installing {} package(s)", task.packages.len(),))?;
+    println_std("Installing given package(s)")?;
 
     let output = Command::new("sh").arg("-c").arg(cmd_str).output()?;
 

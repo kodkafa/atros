@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+pub use types::*;
 
 use crate::{cache::CacheFile, system_pacman::PackageManager};
 
@@ -6,45 +7,7 @@ mod run;
 mod run_install;
 mod run_shell;
 mod tools;
-
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "lowercase")]
-#[derive(PartialEq)]
-pub enum System {
-    Mac,
-    Arch,
-    Debian,
-    Fedora,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct TaskBoilerPlate {
-    pub system: Option<System>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct InstallTask {
-    // #[serde(flatten)]
-    // boilerplate: TaskBoilerPlate,
-    pub system: Option<System>,
-    pub packages: Vec<String>,
-    pub params: Option<Vec<String>>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct ShellTask {
-    // #[serde(flatten)]
-    // boilerplate: TaskBoilerPlate,
-    pub system: Option<System>,
-    pub cmd: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(tag = "type", rename_all = "lowercase")]
-pub enum Task {
-    Install(InstallTask),
-    Shell(ShellTask),
-}
+mod types;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Step {
