@@ -8,6 +8,7 @@ pub mod executor;
 pub mod initialize;
 pub mod step;
 pub mod system_pacman;
+pub mod tools;
 
 pub fn get_active_system() -> anyhow::Result<System> {
     match std::env::consts::OS {

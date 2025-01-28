@@ -2,12 +2,12 @@ use std::process::Command;
 
 use colored::Colorize;
 
-use crate::cache::CachedTask;
-
-use super::{
+use crate::{
+    cache::CachedTask,
     tools::{is_cmd_passes, prettify_output, println_no_space_std, println_std, smallify_command},
-    types::ShellTask,
 };
+
+use super::types::ShellTask;
 
 pub fn run(task: &ShellTask, task_cache: &mut CachedTask) -> anyhow::Result<()> {
     println_std("Task Type: shell")?;

@@ -6,7 +6,6 @@ use crate::{cache::CacheFile, system_pacman::PackageManager};
 mod run;
 mod run_install;
 mod run_shell;
-mod tools;
 mod types;
 
 #[derive(Serialize, Deserialize, Debug)]

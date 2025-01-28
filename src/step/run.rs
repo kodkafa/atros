@@ -6,9 +6,10 @@ use crate::{
     cache::{CacheFile, CachedTask},
     step::{Step, Task},
     system_pacman::PackageManager,
+    tools::println_std,
 };
 
-use super::{run_install, run_shell, tools::println_std, System};
+use super::{run_install, run_shell, System};
 
 pub fn run(
     step: &Step,
