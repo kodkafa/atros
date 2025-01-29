@@ -65,9 +65,25 @@ impl PackageManager {
 
     pub fn install(
         &self,
-        task: &RefinedInstallTask,
+        mut task: RefinedInstallTask,
         task_cache: Option<&mut CachedTask>,
     ) -> anyhow::Result<()> {
+        let mut cmd = self.cmd;
+
+        task.params.retain(|val| {
+            if val.starts_with("$atros-") {
+                match val.as_str() {
+                    "$atros-use-yay" => cmd = "yay",
+                    "$atros-use-apt-get" => cmd = "apt-get",
+                    _ => panic!("Unknown $atros parameter found"),
+                }
+
+                return false;
+            }
+
+            true
+        });
+
         let cmd_string = format!(
             "{} {} {} {} {} {}",
             self.install_cmd.env_str,
@@ -76,7 +92,7 @@ impl PackageManager {
             } else {
                 ""
             },
-            self.cmd,
+            cmd,
             self.install_cmd.command,
             task.params.join(" "),
             task.packages.join(" ")

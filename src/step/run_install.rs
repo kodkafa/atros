@@ -15,7 +15,7 @@ pub fn run(
     let refined_tasks = task.refine_tasks(system);
 
     for (idx, task) in refined_tasks.into_iter().enumerate() {
-        package_manager.install(&task, if idx == 0 { Some(task_cache) } else { None })?;
+        package_manager.install(task, if idx == 0 { Some(task_cache) } else { None })?;
     }
 
     Ok(())

@@ -51,7 +51,7 @@ pub fn run(
                 file_cache
                     .tasks
                     .get_mut(idx)
-                    .expect("An error occured while unwrapping task cache")
+                    .ok_or(anyhow::anyhow!("An error occured while getting task cache"))?
             }
         };
 
