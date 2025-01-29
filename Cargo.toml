@@ -1,7 +1,16 @@
 [package]
 name = "atros"
 version = "0.1.0"
+authors = ["Cugatay cagataykaydir@gmail.com"]
 edition = "2021"
+license = "MIT"
+description = "Automation for the rest of us"
+repository = "https://github.com/kodkafa/atros"
+readme = "README.md"
+
+[[bin]]
+name = "atros"
+path = "src/main.rs"
 
 [dependencies]
 anyhow = "1.0.95"
