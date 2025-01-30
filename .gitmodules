@@ -1,0 +1,3 @@
+[submodule ".atros"]
+	path = .atros
+	url = https://github.com/Atros-Automation-Tools/config-prerequisites

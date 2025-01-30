@@ -16,7 +16,7 @@ You can fork this repo by clicking the fork button in the top right corner of th
 
 ```sh
 # Clone on your local machine
-git clone git@github.com:your-username/atros.git
+git --recursive clone git@github.com:your-username/atros.git # --recursive is for examples/ folder
 
 # Navigate to the project directory
 cd atros/

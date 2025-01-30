@@ -42,7 +42,7 @@ pub fn initialize() -> anyhow::Result<()> {
 
     let git_clone = Command::new("git")
         .arg("clone")
-        .arg("--recurse-submodules")
+        .arg("--recursive")
         .arg("https://github.com/kodkafa/atros-config-template")
         .arg(path_str)
         .output()?;
